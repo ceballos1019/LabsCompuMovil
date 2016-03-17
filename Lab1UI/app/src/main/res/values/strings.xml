@@ -1,0 +1,233 @@
+<resources>
+    <string name="app_name">Lab1UI</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Apellido">Apellido</string>
+    <string name="Pais">Pais</string>
+    <string name="Femenino">Femenino</string>
+    <string name="Masculino">Masculino</string>
+    <string name="Sexo">Sexo</string>
+    <string name="Telefono">Telefono</string>
+    <string name="Direccion">Direccion</string>
+    <string name="Email">Email</string>
+    <string name="hobbies">hobbies</string>
+    <string name="fecha_de_nacimiento">fecha de nacimiento</string>
+    <string name="Mostrar">Mostrar</string>
+    <string name="Informacion">Informacion ingresada</string>
+    <string name="ejemplo">Has presionado el boton</string>
+    <string-array name="Pais">
+        <item>	Afganistán	</item>
+        <item>	Albania	</item>
+        <item>	Alemania	</item>
+        <item>	Andorra	</item>
+        <item>	Angola	</item>
+        <item>	Antigua y Barbuda	</item>
+        <item>	Arabia Saudita	</item>
+        <item>	Argelia	</item>
+        <item>	Argentina	</item>
+        <item>	Armenia	</item>
+        <item>	Australia	</item>
+        <item>	Austria	</item>
+        <item>	Azerbaiyán	</item>
+        <item>	Bahamas	</item>
+        <item>	Bangladés	</item>
+        <item>	Barbados	</item>
+        <item>	Baréin	</item>
+        <item>	Bélgica	</item>
+        <item>	Belice	</item>
+        <item>	Benín	</item>
+        <item>	Bielorrusia	</item>
+        <item>	Birmania	</item>
+        <item>	Bolivia	</item>
+        <item>	Bosnia y Herzegovina	</item>
+        <item>	Botsuana	</item>
+        <item>	Brasil	</item>
+        <item>	Brunéi	</item>
+        <item>	Bulgaria	</item>
+        <item>	Burkina Faso	</item>
+        <item>	Burundi	</item>
+        <item>	Bután	</item>
+        <item>	Cabo Verde	</item>
+        <item>	Camboya	</item>
+        <item>	Camerún	</item>
+        <item>	Canadá	</item>
+        <item>	Catar	</item>
+        <item>	Chad	</item>
+        <item>	Chile	</item>
+        <item>	China	</item>
+        <item>	Chipre	</item>
+        <item>	Ciudad del Vaticano	</item>
+        <item>	Colombia	</item>
+        <item>	Comoras	</item>
+        <item>	Corea del Norte	</item>
+        <item>	Corea del Sur	</item>
+        <item>	Costa de Marfil	</item>
+        <item>	Costa Rica	</item>
+        <item>	Croacia	</item>
+        <item>	Cuba	</item>
+        <item>	Dinamarca	</item>
+        <item>	Dominica	</item>
+        <item>	Ecuador	</item>
+        <item>	Egipto	</item>
+        <item>	El Salvador	</item>
+        <item>	Emiratos Árabes Unidos	</item>
+        <item>	Eritrea	</item>
+        <item>	Eslovaquia	</item>
+        <item>	Eslovenia	</item>
+        <item>	España	</item>
+        <item>	Estados Unidos	</item>
+        <item>	Estonia	</item>
+        <item>	Etiopía	</item>
+        <item>	Filipinas	</item>
+        <item>	Finlandia	</item>
+        <item>	Fiyi	</item>
+        <item>	Francia	</item>
+        <item>	Gabón	</item>
+        <item>	Gambia	</item>
+        <item>	Georgia	</item>
+        <item>	Ghana	</item>
+        <item>	Granada	</item>
+        <item>	Grecia	</item>
+        <item>	Guatemala	</item>
+        <item>	Guyana	</item>
+        <item>	Guinea	</item>
+        <item>	Guinea ecuatorial	</item>
+        <item>	Guinea-Bisáu	</item>
+        <item>	Haití	</item>
+        <item>	Honduras	</item>
+        <item>	Hungría	</item>
+        <item>	India	</item>
+        <item>	Indonesia	</item>
+        <item>	Irak	</item>
+        <item>	Irán	</item>
+        <item>	Irlanda	</item>
+        <item>	Islandia	</item>
+        <item>	Islas Marshall	</item>
+        <item>	Islas Salomón	</item>
+        <item>	Israel	</item>
+        <item>	Italia	</item>
+        <item>	Jamaica	</item>
+        <item>	Japón	</item>
+        <item>	Jordania	</item>
+        <item>	Kazajistán	</item>
+        <item>	Kenia	</item>
+        <item>	Kirguistán	</item>
+        <item>	Kiribati	</item>
+        <item>	Kuwait	</item>
+        <item>	Laos	</item>
+        <item>	Lesoto	</item>
+        <item>	Letonia	</item>
+        <item>	Líbano	</item>
+        <item>	Liberia	</item>
+        <item>	Libia	</item>
+        <item>	Liechtenstein	</item>
+        <item>	Lituania	</item>
+        <item>	Luxemburgo	</item>
+        <item>	Madagascar	</item>
+        <item>	Malasia	</item>
+        <item>	Malaui	</item>
+        <item>	Maldivas	</item>
+        <item>	Malí	</item>
+        <item>	Malta	</item>
+        <item>	Marruecos	</item>
+        <item>	Mauricio	</item>
+        <item>	Mauritania	</item>
+        <item>	México	</item>
+        <item>	Micronesia	</item>
+        <item>	Moldavia	</item>
+        <item>	Mónaco	</item>
+        <item>	Mongolia	</item>
+        <item>	Montenegro	</item>
+        <item>	Mozambique	</item>
+        <item>	Namibia	</item>
+        <item>	Nauru	</item>
+        <item>	Nepal	</item>
+        <item>	Nicaragua	</item>
+        <item>	Níger	</item>
+        <item>	Nigeria	</item>
+        <item>	Noruega	</item>
+        <item>	Nueva Zelanda	</item>
+        <item>	Omán	</item>
+        <item>	Países Bajos	</item>
+        <item>	Pakistán	</item>
+        <item>	Palaos	</item>
+        <item>	Panamá	</item>
+        <item>	Papúa Nueva Guinea	</item>
+        <item>	Paraguay	</item>
+        <item>	Perú	</item>
+        <item>	Polonia	</item>
+        <item>	Portugal	</item>
+        <item>	Reino Unido	</item>
+        <item>	República Centroafricana	</item>
+        <item>	República Checa	</item>
+        <item>	República de Macedonia	</item>
+        <item>	República del Congo	</item>
+        <item>	República Democrática del Congo	</item>
+        <item>	República Dominicana	</item>
+        <item>	República Sudafricana	</item>
+        <item>	Ruanda	</item>
+        <item>	Rumanía	</item>
+        <item>	Rusia	</item>
+        <item>	Samoa	</item>
+        <item>	San Cristóbal y Nieves	</item>
+        <item>	San Marino	</item>
+        <item>	San Vicente y las Granadinas	</item>
+        <item>	Santa Lucía	</item>
+        <item>	Santo Tomé y Príncipe	</item>
+        <item>	Senegal	</item>
+        <item>	Serbia	</item>
+        <item>	Seychelles	</item>
+        <item>	Sierra Leona	</item>
+        <item>	Singapur	</item>
+        <item>	Siria	</item>
+        <item>	Somalia	</item>
+        <item>	Sri Lanka	</item>
+        <item>	Suazilandia	</item>
+        <item>	Sudán	</item>
+        <item>	Sudán del Sur	</item>
+        <item>	Suecia	</item>
+        <item>	Suiza	</item>
+        <item>	Surinam	</item>
+        <item>	Tailandia	</item>
+        <item>	Tanzania	</item>
+        <item>	Tayikistán	</item>
+        <item>	Timor Oriental	</item>
+        <item>	Togo	</item>
+        <item>	Tonga	</item>
+        <item>	Trinidad y Tobago	</item>
+        <item>	Túnez	</item>
+        <item>	Turkmenistán	</item>
+        <item>	Turquía	</item>
+        <item>	Tuvalu	</item>
+        <item>	Ucrania	</item>
+        <item>	Uganda	</item>
+        <item>	Uruguay	</item>
+        <item>	Uzbekistán	</item>
+        <item>	Vanuatu	</item>
+        <item>	Venezuela	</item>
+        <item>	Vietnam	</item>
+        <item>	Yemen	</item>
+        <item>	Yibuti	</item>
+        <item>	Zambia	</item>
+        <item>	Zimbabue	</item>
+
+
+    </string-array>
+    <string-array name="hobbies">
+        <item>Hacer deporte</item>
+        <item>Jugar videojuegos</item>
+        <item>Bailar</item>
+        <item>Cocinar</item>
+        <item>Escuchar musica</item>
+        <item>Cantar</item>
+        <item>Estudiar</item>
+        <item>Diseñar aplicaciones moviles</item>
+    </string-array>
+    <string name="nombre">Nombre: %1$s</string>
+    <string name="apellido">\nApellido: %1$s</string>
+    <string name="telefono">\nTelefono: %1$s</string>
+    <string name="direccion">\nDireccion: %1$s</string>
+    <string name="email">\nEmail: %1$s</string>
+    <string name="fecha_nacimiento">\nFecha de nacimiento: %1$d/%2$d/%3$d</string>
+    <string name="sexo">\nSexo: %1$s</string>
+    <string name="pais">\nPais: %1$S</string>
+</resources>
