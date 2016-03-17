@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lab2AppRun</string>
+    <string name="Usuario">Usuario</string>
+
+    <string name="Password">Password</string>
+    <string name="Registrarse">Registrarse</string>
+    <string name="Ingresar">Ingresar</string>
+</resources>
