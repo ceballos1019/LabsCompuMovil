@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <EditText
+        android:id="@+id/txtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:onClick="onClick"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:hint="Nombre de usuario"/>
+
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:inputType="textEmailAddress"
+        android:onClick="onClick"
+        android:imeOptions="actionNext"
+        android:hint="Correo electrónico"/>
+
+    <EditText
+        android:id="@+id/txtPasswordRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:inputType="textPassword"
+        android:onClick="onClick"
+        android:imeOptions="actionNext"
+        android:hint="Contraseña"/>
+
+    <EditText
+        android:id="@+id/txtPasswordConfirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="40dp"
+        android:inputType="textPassword"
+        android:onClick="onClick"
+        android:imeOptions="actionDone"
+        android:hint="Confirma tu contraseña"
+        />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onClick"
+        android:text="Guardar" />
+
+</LinearLayout>

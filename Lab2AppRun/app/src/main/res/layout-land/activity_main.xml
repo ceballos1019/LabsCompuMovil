@@ -14,35 +14,32 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/txtUserLogin"
         android:inputType="text"
-            android:hint="@string/Usuario"
-         />
+        android:hint="@string/Usuario"/>
 
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/txtPasswordLogin"
+        android:layout_below="@+id/txtUserLogin"
         android:inputType="textPassword"
-    android:hint="@string/Password"/>
+        android:hint="@string/Password"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Ingresar"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText2"
-        android:onClick="Onclick"/>
+        android:id="@+id/btnLogin"
+        android:layout_below="@+id/txtPasswordLogin"
+        android:onClick="onClick"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Registrarse"
-        android:id="@+id/button2"
-
-        android:layout_alignTop="@+id/button"
-        android:layout_toRightOf="@+id/button"
-        android:layout_marginLeft="54dp"
-   />
+        android:id="@+id/btnRegister"
+        android:layout_alignTop="@+id/btnLogin"
+        android:layout_toRightOf="@+id/btnLogin"
+        android:onClick="onClick"/>
 </RelativeLayout>
