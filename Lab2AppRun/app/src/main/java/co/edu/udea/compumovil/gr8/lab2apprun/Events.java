@@ -20,6 +20,20 @@ public class Events {
     static String[] Headlines = {
         "Carrera de Barcelona - 20km - 06/03/2016",
         "Carrera de Paris - 50km - 12/03/2016",
+        "Carrera de Brasil - 120km - 16/08/2016",
+        "Carrera de Barcelona - 20km - 06/03/2016",
+        "Carrera de Paris - 50km - 12/03/2016",
+        "Carrera de Brasil - 120km - 16/08/2016",
+        "Carrera de Barcelona - 20km - 06/03/2016",
+        "Carrera de Paris - 50km - 12/03/2016",
+        "Carrera de Brasil - 120km - 16/08/2016",
+        "Carrera de Paris - 50km - 12/03/2016",
+        "Carrera de Brasil - 120km - 16/08/2016",
+        "Carrera de Barcelona - 20km - 06/03/2016",
+        "Carrera de Paris - 50km - 12/03/2016",
+        "Carrera de Brasil - 120km - 16/08/2016",
+        "Carrera de Barcelona - 20km - 06/03/2016",
+        "Carrera de Paris - 50km - 12/03/2016",
         "Carrera de Brasil - 120km - 16/08/2016"
 
     };

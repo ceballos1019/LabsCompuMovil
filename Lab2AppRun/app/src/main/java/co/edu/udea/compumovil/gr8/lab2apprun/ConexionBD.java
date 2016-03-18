@@ -51,15 +51,14 @@ public class ConexionBD {
         String columns [] = {MyDBHandler.COLUMN_USUARIO,MyDBHandler.COLUMN_CONTRASEÑA};
         String selection = "usuario=? and contraseña=?";
         String selectionArgs[] = {username,pass};
-        Cursor c1 = db.query(MyDBHandler.TABLA_USUARIOS,columns,selection,selectionArgs,null,null,null);
-
-        Toast.makeText(context,"Usuario: "+ username + "\nContraseña:" + pass,Toast.LENGTH_LONG).show();
-
+        //Cursor c1 = db.query(MyDBHandler.TABLA_USUARIOS,columns,selection,selectionArgs,null,null,null);
+        Cursor c1 = db.query(MyDBHandler.TABLA_USUARIOS,columns,null,null,null,null,null);
         //Si el cursor esta vacio es porque el usuario o la contraseña es incorrecta
         if(!c1.moveToFirst()){
             Toast.makeText(context,"Usuario o contraseña incorrectas",Toast.LENGTH_SHORT).show();
             return false;
         }
+
         return true;
     }
 

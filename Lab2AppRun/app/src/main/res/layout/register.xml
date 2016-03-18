@@ -49,8 +49,13 @@
         android:inputType="textPassword"
         android:onClick="onClick"
         android:imeOptions="actionDone"
-        android:hint="Confirma tu contraseña"
-        />
+        android:layout_marginBottom="10dp"
+        android:hint="Confirma tu contraseña"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtPassMessage"/>
 
     <Button
         android:id="@+id/btnSave"
@@ -59,5 +64,7 @@
         android:layout_gravity="center"
         android:onClick="onClick"
         android:text="Guardar" />
+
+
 
 </LinearLayout>

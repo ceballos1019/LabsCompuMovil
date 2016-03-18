@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //Variables globales
     private EditText username, password, email, emailConfirmation;
+    private TextView passwordMessage;
     private Button btnSave;
     private ConexionBD dbConexion;
     private boolean enabledButton;  //Variable para controlar que todos los campos sean llenados
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         email=(EditText) findViewById(R.id.txtEmail);
         emailConfirmation= (EditText) findViewById(R.id.txtPasswordConfirmation);
         btnSave = (Button) findViewById(R.id.btnSave);
+        passwordMessage = (TextView) findViewById(R.id.txtPassMessage);
 
         //Se añaden los listeners
         emailConfirmation.setOnEditorActionListener(editorActionListener);
@@ -82,7 +84,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         enabledButton = username.getText().toString().equals("") ||
                         email.getText().toString().equals("") ||
                         password.getText().toString().equals("") ||
-                        password.getText().toString().equals("");
+                        password.getText().toString().equals("") ||
+                        !passwordMessage.getText().toString().equals("");
         btnSave.setEnabled(!enabledButton);
     }
 
@@ -101,6 +104,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
        @Override
        public void afterTextChanged(Editable s) {
            if(password.getText().toString().equals(s.toString())){
+               passwordMessage.setText("");
+           }else{
+               passwordMessage.setText("Las contraseñas no coinciden");
+               btnSave.setEnabled(false);
            }
 
 
