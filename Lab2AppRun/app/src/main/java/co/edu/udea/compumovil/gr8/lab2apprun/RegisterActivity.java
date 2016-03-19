@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.LoginFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Sergio on 08/03/2016.
@@ -27,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText username, password, email, emailConfirmation;
     private TextView passwordMessage;
     private Button btnSave;
-    private ConexionBD dbConexion;
+    private DBAdapter dbConexion;
     private boolean enabledButton;  //Variable para controlar que todos los campos sean llenados
 
     @Override
@@ -49,8 +46,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         emailConfirmation.addTextChangedListener(textWatcher);
 
         //Se crea la conexión a la base de datos
-        dbConexion = new ConexionBD(this);
-        dbConexion.abrirConexion();
+        dbConexion = new DBAdapter(this);
+        dbConexion.open();
 }
 
     public void onClick(View v) {
@@ -61,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String name = username.getText().toString();
                 String password=this.password.getText().toString();
                 String email = this.email.getText().toString();
-                dbConexion.insert(name, password, email);
-                dbConexion.cerrarConexion();
+                dbConexion.insertUser(name, password, email);
+                dbConexion.close();
                 finish();
                 break;
 

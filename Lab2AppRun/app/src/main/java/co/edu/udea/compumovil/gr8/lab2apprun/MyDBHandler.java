@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr8.lab2apprun;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 import android.util.Log;
 
 /**
@@ -14,12 +15,14 @@ public class MyDBHandler extends SQLiteOpenHelper  {
 
 
 
-    //informacion de la base de datos
+    //Información de la base de datos
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "CarrerasDB.db";
     public static final String TABLA_USUARIOS = "usuarios";
 
-    //informacion de la tabla
+
+
+    //Información de la tabla
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_USUARIO = "usuario";
     public static final String COLUMN_CONTRASEÑA = "contraseña";

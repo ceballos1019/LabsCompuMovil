@@ -3,12 +3,8 @@ package co.edu.udea.compumovil.gr8.lab2apprun;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Validar que los datos ingresados esten correctos
-        ConexionBD bd = new ConexionBD(this);
-        bd.abrirConexion();
-        wrongData=bd.getUser(getApplicationContext(),user.getText().toString(),password.getText().toString());
-        bd.cerrarConexion();
+        DBAdapter dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+        wrongData=dbAdapter.getUser(getApplicationContext(),user.getText().toString(),password.getText().toString());
+        dbAdapter.close();
         return wrongData;
     }
 

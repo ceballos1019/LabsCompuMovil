@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,8 +55,27 @@ public class EventDetailsFragment extends Fragment {
 
     public void updateArticleView(int position) {
         TextView article = (TextView) getActivity().findViewById(R.id.article);
-        article.setText(Events.Articles[position]);
+        DBAdapter dbAdapter = new DBAdapter(getContext());
+        dbAdapter.open();
+        ArrayList<Event> listEvents= dbAdapter.getEvents(getContext());
+        String eventDetails = listResult(listEvents,position);
+        dbAdapter.close();
+        article.setText(eventDetails);
         mCurrentPosition = position;
+    }
+
+    private String listResult(ArrayList<Event> listEvents, int position) {
+        ArrayList<String> stringEvents = new ArrayList<>();
+        String formatString;
+        Event currentEvent= listEvents.get(position);
+        formatString= currentEvent.getName()+"\n\n" +
+                "Descripcion: " + currentEvent.getDescription()+
+                "\nDistancia: " + currentEvent.getDistance() +
+                "\nLugar: " + currentEvent.getPlace() +
+                "\nFecha: " + currentEvent.getDate() +
+                "\nDatos de contacto: " + currentEvent.getContact();
+
+        return formatString;
     }
 
     @Override

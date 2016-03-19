@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="co.edu.udea.compumovil.gr8.myapplication.MainActivity"
+    tools:context="co.edu.udea.compumovil.gr8.lab2apprun.EventActivity"
     tools:showIn="@layout/app_bar_events">
 
 </FrameLayout>
