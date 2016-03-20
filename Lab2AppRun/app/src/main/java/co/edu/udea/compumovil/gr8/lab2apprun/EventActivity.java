@@ -1,6 +1,7 @@
 package co.edu.udea.compumovil.gr8.lab2apprun;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,20 +12,24 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Sergio on 06/03/2016.
  */
 public class EventActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EventListFragment.OnHeadlineSelectedListener {
 
+    private String currentTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Eventos");
         setContentView(R.layout.events);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        currentTitle="Eventos";
+        setTitle(currentTitle);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         android.support.v7.app.ActionBarDrawerToggle toggle = new android.support.v7.app.ActionBarDrawerToggle(
@@ -37,9 +42,9 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         navigationView.setCheckedItem(R.id.nav_event);
         if(findViewById(R.id.fragment_container) != null){
 
-            Fragment headlinesFragment = new EventListFragment();
+            Fragment listFragment = new EventListFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container, headlinesFragment);
+            transaction.add(R.id.fragment_container, listFragment);
             transaction.commit();
         }
 
@@ -57,12 +62,15 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         switch (id){
             case R.id.nav_event:
                 fragment = new EventListFragment();
+                currentTitle = "Eventos";
                 break;
             case R.id.nav_perfil:
                 fragment = new PerfilFragment();
+                currentTitle = "Perfil";
                 break;
             case R.id.nav_about:
                 fragment = new AboutFragment();
+                currentTitle="Acerca de";
                 break;
             case R.id.nav_logout:
                 backToLogin();
@@ -79,6 +87,7 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
             fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
+            setTitle(currentTitle);
         }
         return true;
     }
@@ -97,7 +106,19 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }else{
-            moveTaskToBack(true);
+            Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if(f instanceof EventCreationFragment || f instanceof  EventDetailsFragment){
+                Fragment fragment = new EventListFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
+                // que nosotros queremos. y usamos el metodo commit para actualizar el estado
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                setTitle(currentTitle);
+            }else {
+                moveTaskToBack(true);
+            }
         }
     }
 
@@ -156,5 +177,26 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
             // Commit the transaction
             transaction.commit();
         }
+
+    public void onClick(View v){
+
+        int id = v.getId();
+        switch (id){
+            case R.id.fab:
+                Fragment fragment = new EventCreationFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack so the user can navigate back
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                // Commit the transaction
+                transaction.commit();
+                setTitle("Registro de evento");
+                break;
+        }
+
+    }
+
     }
 

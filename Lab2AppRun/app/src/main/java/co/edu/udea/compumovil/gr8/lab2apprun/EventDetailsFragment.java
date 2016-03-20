@@ -2,11 +2,13 @@ package co.edu.udea.compumovil.gr8.lab2apprun;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,8 @@ public class EventDetailsFragment extends Fragment {
 
     final static String ARG_POSITION = "position";
     int mCurrentPosition = -1;
+    private FloatingActionButton fab;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

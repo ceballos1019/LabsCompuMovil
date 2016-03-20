@@ -232,6 +232,7 @@ public class DBAdapter {
         db.delete(TABLA_LOGIN,null,null);
     }
 
+
 }
 
 

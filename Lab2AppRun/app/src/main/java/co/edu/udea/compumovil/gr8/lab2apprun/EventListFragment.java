@@ -4,6 +4,7 @@ package co.edu.udea.compumovil.gr8.lab2apprun;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class EventListFragment extends ListFragment {
 
 
     OnHeadlineSelectedListener mCallback;
+    private FloatingActionButton fab;
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnHeadlineSelectedListener {
@@ -46,7 +49,8 @@ public class EventListFragment extends ListFragment {
         ArrayList<Event> listEvents= dbAdapter.getEvents(getContext());
         ArrayList<String> listEventsStrings = listResult(listEvents);
         dbAdapter.close();
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout,listEventsStrings));
+        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, listEventsStrings));
+
 
     }
 
@@ -93,7 +97,16 @@ public class EventListFragment extends ListFragment {
         mCallback.onArticleSelected(position);
 
         // Set the item as checked to be highlighted when in two-pane layout
-        getListView().setItemChecked(position, true);
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //return super.onCreateView(inflater, container, savedInstanceState);
+
+        return inflater.inflate(R.layout.fragment_event_list,null);
+    }
+
+
 
 }
