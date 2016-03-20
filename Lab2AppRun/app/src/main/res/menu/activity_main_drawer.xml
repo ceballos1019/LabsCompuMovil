@@ -6,13 +6,23 @@
             android:id="@+id/nav_event"
             android:icon="@drawable/ic_action_event"
             android:title="Eventos" />
-        <item
-            android:id="@+id/nav_perfil"
-            android:icon="@drawable/ic_action_person"
-            android:title="Perfil" />
+
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_action_about"
             android:title="Acerca de" />
     </group>
+    <item android:title="Cuenta">
+        <menu>
+            <item
+                android:id="@+id/nav_perfil"
+                android:icon="@drawable/ic_action_person"
+                android:title="Perfil" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_action_cancel"
+                android:title="Salir"/>
+        </menu>
+    </item>
 </menu>

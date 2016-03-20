@@ -11,4 +11,27 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
+    <string name="aboutSubject">En la materia los temas que se van a tratar seran los siguientes:
+        \n 1.Una introduccion a computacion movil
+        \n 2.Introduccion a android
+        \n 3.Interfaz gráfica
+        \n 4.Activity
+        \n 5.Fragments
+        \n 6.Intents
+        \n 7.Services
+        \n 8.Content providers
+        \n 9.Broadcast receiver
+        \n10.Cloud computing\n </string>
+    <string name="aboutCourse">
+        El curso Computación Móvil introduce los conceptos básicos acerca del diseño y desarrollo de aplicaciones móviles.
+        En el curso se tratan temas generales de computación móvil como arquitectura de dispositivos móviles y temas particulares en el desarrollo
+        de aplicaciones en Android referentes a la arquitectura de software,manejo del framework de programación Android studio
+        y desarrollo de interfaces de usuario utilizando Material Design.</string>
+    <string name="Carrera">Nombre de la carrera</string>
+    <string name="Distancia">Distancia</string>
+    <string name="Fecha">Fecha</string>
+    <string name="Descripcion">Descripcion</string>
+    <string name="Lugar">Lugar</string>
+    <string name="Telefono">Telefono</string>
+    <string name="Evento">Crear evento</string>
 </resources>

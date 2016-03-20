@@ -24,7 +24,14 @@ public class MainActivity extends AppCompatActivity {
         //Capturamos los views
         user =(EditText)findViewById(R.id.txtUserLogin);
         password=(EditText)findViewById(R.id.txtPasswordLogin);
+        DBAdapter dbAdapter = new DBAdapter(getApplicationContext());
+        dbAdapter.open();
+        User isOn = dbAdapter.getCurrentUser();
 
+        if(isOn!=null) {
+            Intent events = new Intent(MainActivity.this, EventActivity.class);
+            startActivity(events);
+        }
         }
 
 
@@ -34,11 +41,17 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.btnLogin:
                     if(validateLogin()) {
+                        //Se guarda el login en la base de datos
+                        DBAdapter dbAdapter = new DBAdapter(this);
+                        dbAdapter.open();
+                        dbAdapter.setCurrentLogin(user.getText().toString());
+                        dbAdapter.close();
+
                         //Login correcto - Se lanza la otra actividad
                         Intent events = new Intent(MainActivity.this,EventActivity.class);
                         startActivity(events);
-                    }else{
-                        //Logeo incorrecto - Se limpian los campos de texto
+
+                        //Se limpian los campos de texto
                         user.setText("");
                         password.setText("");
                     }

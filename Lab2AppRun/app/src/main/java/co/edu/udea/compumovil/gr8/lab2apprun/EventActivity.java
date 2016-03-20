@@ -64,17 +64,31 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
             case R.id.nav_about:
                 fragment = new AboutFragment();
                 break;
+            case R.id.nav_logout:
+                backToLogin();
+                break;
+
             default:
                 break;
         }
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
-        // que nosotros queremos. y usamos el metodo commit para actualizar el estado
-        fragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if(fragment!=null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
+            // que nosotros queremos. y usamos el metodo commit para actualizar el estado
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
+    }
+
+    private void backToLogin() {
+        DBAdapter dbAdapter = new DBAdapter(getApplicationContext());
+        dbAdapter.open();
+        dbAdapter.deleteLogin();
+        dbAdapter.close();
+        finish();
     }
 
     @Override
@@ -82,8 +96,8 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }else{
+            moveTaskToBack(true);
         }
     }
 
