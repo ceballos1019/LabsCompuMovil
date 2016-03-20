@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import co.edu.udea.compumovil.gr8.lab2apprun.Modelo.Event;
+import co.edu.udea.compumovil.gr8.lab2apprun.Modelo.User;
 
 /**
  * Created by Sergio on 08/03/2016.
@@ -198,6 +200,7 @@ public class DBAdapter {
         return listEvents;
     }
 
+    //Retorna el usuario logeado actualmente
     public User getCurrentUser(){
         String columns [] = {Login.LOGIN_CURRENT_USER_NAME};
         Cursor c1 = db.query(TABLA_LOGIN,columns,null,null,null,null,null);
@@ -221,6 +224,7 @@ public class DBAdapter {
         return currentUser;
     }
 
+    //Inserta el usuario actualmente logeado en la tabla Login
     public void setCurrentLogin(String currentUser){
         ContentValues values= new ContentValues();
         values.put(Login.LOGIN_CURRENT_USER_NAME, currentUser);
@@ -228,6 +232,7 @@ public class DBAdapter {
 
     }
 
+    //Elimina el registro de la tabla login (Implementado para deslogearse)
     public void deleteLogin() {
         db.delete(TABLA_LOGIN,null,null);
     }

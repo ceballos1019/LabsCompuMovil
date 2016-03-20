@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.udea.compumovil.gr8.lab2apprun.EventDetailsFragment">
+    tools:context=".Eventos.EventDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Modelo;
 
 /**
  * Created by user on 19/03/2016.

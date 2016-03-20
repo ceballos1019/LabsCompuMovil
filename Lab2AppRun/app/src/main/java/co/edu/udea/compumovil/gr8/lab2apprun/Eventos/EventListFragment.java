@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Eventos;
 
 
 import android.app.Activity;
@@ -11,13 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
+
+import co.edu.udea.compumovil.gr8.lab2apprun.Database.DBAdapter;
+import co.edu.udea.compumovil.gr8.lab2apprun.Modelo.Event;
+import co.edu.udea.compumovil.gr8.lab2apprun.R;
 
 
 /**
@@ -55,6 +55,7 @@ public class EventListFragment extends ListFragment {
     }
 
     private ArrayList<String> listResult(ArrayList<Event> listEvents) {
+        //Convertir lista de Eventos a lista de Strings con los encabezados de los eventos
         ArrayList<String> stringEvents = new ArrayList<>();
         String formatString;
         Event currentEvent;

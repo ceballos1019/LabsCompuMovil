@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Registro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import co.edu.udea.compumovil.gr8.lab2apprun.Database.DBAdapter;
+import co.edu.udea.compumovil.gr8.lab2apprun.R;
 
 /**
  * Created by Sergio on 08/03/2016.

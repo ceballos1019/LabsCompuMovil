@@ -1,17 +1,19 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Eventos;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import co.edu.udea.compumovil.gr8.lab2apprun.Database.DBAdapter;
+import co.edu.udea.compumovil.gr8.lab2apprun.Modelo.Event;
+import co.edu.udea.compumovil.gr8.lab2apprun.R;
 
 
 /**
@@ -55,6 +57,8 @@ public class EventCreationFragment extends Fragment {
     }
 
     private void validateEvent() {
+
+        //Validar que todos los campos contengan información
         String name,description,date,phone,place,d;
         int distance;
         name = this.name.getText().toString();
@@ -70,6 +74,8 @@ public class EventCreationFragment extends Fragment {
                 d.equals("") ||
                 phone.equals("") ||
                 place.equals("");
+
+        //Almacenar el evento en la base de datos
         if(!correctEvent){
             Event e = new Event();
             e.setName(name);
@@ -82,14 +88,15 @@ public class EventCreationFragment extends Fragment {
             dbConexion.open();
             dbConexion.insertEvent(e);
             dbConexion.close();
+
+            //Volver a la lista de eventos
             Fragment fragment = new EventListFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
-            // que nosotros queremos. y usamos el metodo commit para actualizar el estado
             fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
-            
+
         }
         else{
+            //Mensaje de validación
             Toast.makeText(getActivity().getApplicationContext(),"Todos los campos son obligatorios",Toast.LENGTH_LONG).show();
         }
     }

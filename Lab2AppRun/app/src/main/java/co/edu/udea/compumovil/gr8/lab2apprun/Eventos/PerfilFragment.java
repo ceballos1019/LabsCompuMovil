@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Eventos;
 
 
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import co.edu.udea.compumovil.gr8.lab2apprun.Database.DBAdapter;
+import co.edu.udea.compumovil.gr8.lab2apprun.Modelo.User;
+import co.edu.udea.compumovil.gr8.lab2apprun.R;
 
 
 /**
@@ -36,8 +38,8 @@ public class PerfilFragment extends Fragment {
         dbAdapter.open();
         User currentUser = dbAdapter.getCurrentUser();
         if(currentUser!=null){
-            userName.setText(currentUser.getName());
-            email.setText(currentUser.getEmail());
+            userName.setText("Usuario: "+ currentUser.getName());
+            email.setText("Email: "+ currentUser.getEmail());
         }
         return view;
     }

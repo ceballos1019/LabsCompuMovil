@@ -1,7 +1,6 @@
-package co.edu.udea.compumovil.gr8.lab2apprun;
+package co.edu.udea.compumovil.gr8.lab2apprun.Eventos;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,7 +12,9 @@ import android.support.v4.view.GravityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import co.edu.udea.compumovil.gr8.lab2apprun.Database.DBAdapter;
+import co.edu.udea.compumovil.gr8.lab2apprun.R;
 
 /**
  * Created by Sergio on 06/03/2016.
@@ -59,6 +60,7 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
 
         int id = item.getItemId();
 
+        //Saber que item del Navigation Drawer se escogió
         switch (id){
             case R.id.nav_event:
                 fragment = new EventListFragment();
@@ -82,8 +84,6 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
 
         if(fragment!=null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
-            // que nosotros queremos. y usamos el metodo commit para actualizar el estado
             fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -92,6 +92,7 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
+    //Deslogearse de la aplicacion
     private void backToLogin() {
         DBAdapter dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.open();
@@ -108,15 +109,15 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         }else{
             Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if(f instanceof EventCreationFragment || f instanceof  EventDetailsFragment){
+                //Volver a los eventos
                 Fragment fragment = new EventListFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                //indicamos que se va comenzar una transaccion para colocar dentro del contenedor de frame el Fragment
-                // que nosotros queremos. y usamos el metodo commit para actualizar el estado
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
                 DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 setTitle(currentTitle);
             }else {
+                //No volver al login, sino minimizar la aplicacion
                 moveTaskToBack(true);
             }
         }
@@ -134,12 +135,6 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        /*int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -149,20 +144,7 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         // The user selected the headline of an article from the HeadlinesFragment
 
         // Capture the article fragment from the activity layout
-        /*ArticleFragment articleFrag = (ArticleFragment)
-                getSupportFragmentManager().findFragmentById(R.id.article_fragment);
 
-        if (articleFrag != null) {
-            // If article frag is available, we're in two-pane layout...
-
-            // Call a method in the ArticleFragment to update its content
-            articleFrag.updateArticleView(position);
-
-        } else {
-            // If the frag is not available, we're in the one-pane layout and must swap frags...
-
-            // Create fragment and give it an argument for the selected article
-            */
             Fragment newFragment = new EventDetailsFragment();
             Bundle args = new Bundle();
             args.putInt(EventDetailsFragment.ARG_POSITION, position);
@@ -171,6 +153,7 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
 
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack so the user can navigate back
+
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.addToBackStack(null);
 
@@ -183,14 +166,11 @@ public class EventActivity extends AppCompatActivity implements NavigationView.O
         int id = v.getId();
         switch (id){
             case R.id.fab:
+                //Acción cuando de click en el boton flotante
                 Fragment fragment = new EventCreationFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                // Replace whatever is in the fragment_container view with this fragment,
-                // and add the transaction to the back stack so the user can navigate back
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
-                // Commit the transaction
                 transaction.commit();
                 setTitle("Registro de evento");
                 break;
