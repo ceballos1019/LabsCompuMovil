@@ -10,7 +10,20 @@
     tools:context="co.edu.udea.compumovil.lab3gr8.pomodoro.MainActivity">
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/initial_value"
+        android:textSize="@dimen/time_size"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_start"
+        android:textSize="25sp"
+        android:layout_below="@+id/tv_time"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

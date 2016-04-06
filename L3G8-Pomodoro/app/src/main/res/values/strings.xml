@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">L3G8-Pomodoro</string>
+    <string name="initial_value">25:00</string>
+    <string name="btn_start">Iniciar</string>
 </resources>
