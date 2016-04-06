@@ -10,6 +10,9 @@ public class PomodoroService extends Service {
     //Binder given to client
     private final IBinder mBinder = new LocalBinder();
     private Counter mCounter;
+    private String remainingTime;
+    private final String FORMAT = "%02d:%02d";
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -18,8 +21,9 @@ public class PomodoroService extends Service {
     }
 
     public String getRemainingTime(){
+        remainingTime = String.format(FORMAT,mCounter.getMinutes(),mCounter.getSeconds());
+        return remainingTime;
 
-        return "";
     }
 
     public class LocalBinder extends Binder{
