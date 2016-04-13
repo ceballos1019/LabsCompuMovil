@@ -1,20 +1,17 @@
 package co.edu.udea.compumovil.lab3gr8.pomodoro;
 
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,8 +19,21 @@ public class MainActivity extends AppCompatActivity {
     PomodoroService mService;
     public static final String COUNTER_TICK_ACTION = "COUNTER_TICK";
     public static final String COUNTER_FINISH_ACTION = "COUNTER_FINISH";
+
+    private static final String TITLE_START= "Iniciar";
+    private static final String TITLE_STOP= "Parar";
+
+    private int currentTime;
+
+    private boolean mode = true;
+
     private  IntentFilter mIntentFilter;
-    private TextView tvTime;
+    private TextView tvTime, tvBreak;
+    private Button btnStart, btnShortBreak, btnLongBreak;
+
+
+    private boolean option = true;
+    private boolean onFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +45,45 @@ public class MainActivity extends AppCompatActivity {
         mIntentFilter.addAction(COUNTER_FINISH_ACTION);
 
         tvTime = (TextView)findViewById(R.id.tv_time);
+        tvBreak = (TextView)findViewById(R.id.tv_break);
+        btnStart = (Button) findViewById(R.id.btn_start);
+        btnShortBreak = (Button) findViewById(R.id.btn_short_break);
+        btnLongBreak = (Button) findViewById(R.id.btn_long_break);
 
+        currentTime= 10000;
+
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(mConnection!=null && !onFinish) {
+            mode = !mode;
+            unbindService(mConnection);
+            setMode();
+
+        }
+
+    }
+
+    public void setMode(){
+        if(mode){
+            btnStart.setVisibility(Button.VISIBLE);
+            btnStart.setText(TITLE_START);
+            tvTime.setVisibility(TextView.VISIBLE);
+            tvTime.setText("25:00");
+            btnShortBreak.setVisibility(Button.INVISIBLE);
+            btnLongBreak.setVisibility(Button.INVISIBLE);
+            tvBreak.setVisibility(TextView.INVISIBLE);
+        }else{
+            btnStart.setVisibility(Button.INVISIBLE);
+            tvTime.setVisibility(TextView.INVISIBLE);
+            btnShortBreak.setVisibility(Button.VISIBLE);
+            btnLongBreak.setVisibility(Button.VISIBLE);
+            tvBreak.setVisibility(TextView.VISIBLE);
+            tvBreak.setText("");
+        }
     }
 
     @Override
@@ -51,9 +99,14 @@ public class MainActivity extends AppCompatActivity {
             switch (action){
                 case COUNTER_TICK_ACTION:
                     tvTime.setText(mService.getRemainingTime());
+                    tvBreak.setText(mService.getRemainingTime());
                     break;
                 case COUNTER_FINISH_ACTION:
-                    tvTime.setText("25:00");
+                    mode = !mode;
+                    setMode();
+                    unbindService(mConnection);
+                    onFinish=true;
+                    option=true;
                     break;
             }
         }
@@ -70,8 +123,30 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch(id){
             case R.id.btn_start:
+                if(option) {
+                    intent = new Intent(this, PomodoroService.class);
+                    bindService(intent, mConnection, BIND_AUTO_CREATE);
+                    btnStart.setText(TITLE_STOP);
+                    onFinish=false;
+                    option=false;
+                }else{
+                    unbindService(mConnection);
+                    btnStart.setText(TITLE_START);
+                    tvTime.setText("25:00");
+                    option=true;
+                }
+                break;
+            case R.id.btn_short_break:
                 intent = new Intent(this, PomodoroService.class);
-                bindService(intent,mConnection,BIND_AUTO_CREATE);
+                currentTime=360000;
+                bindService(intent, mConnection, BIND_AUTO_CREATE);
+                tvBreak.setText("3:00");
+                break;
+            case R.id.btn_long_break:
+                intent = new Intent(this, PomodoroService.class);
+                currentTime=10000;
+                bindService(intent, mConnection, BIND_AUTO_CREATE);
+                tvBreak.setText("10:00");
                 break;
         }
     }
@@ -86,12 +161,17 @@ public class MainActivity extends AppCompatActivity {
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             PomodoroService.LocalBinder binder = (PomodoroService.LocalBinder) service;
-            mService = binder.getService();
+            mService = binder.getService(currentTime);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            option=true;
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
