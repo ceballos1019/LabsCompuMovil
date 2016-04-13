@@ -4,14 +4,15 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 
 public class PomodoroService extends Service {
 
     //Binder given to client
     private final IBinder mBinder = new LocalBinder();
-    private Counter mCounter;
+    private Counter mCounter = new Counter(5000,1000);
+    private static final String FORMAT = "%02d:%02d";
     private String remainingTime;
-    private final String FORMAT = "%02d:%02d";
 
 
     @Override
@@ -20,9 +21,17 @@ public class PomodoroService extends Service {
         return mBinder;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mCounter.setContext(getApplicationContext());
+        mCounter.start();
+    }
+
     public String getRemainingTime(){
         remainingTime = String.format(FORMAT,mCounter.getMinutes(),mCounter.getSeconds());
         return remainingTime;
+
 
     }
 
