@@ -127,6 +127,7 @@ public class DBAdapter {
         currentSettings.setShortBreak(c1.getInt(2));
         currentSettings.setLongBreak(c1.getInt(3));
         currentSettings.setDebugMode(c1.getInt(4));
+        c1.close();
         return currentSettings;
     }
 

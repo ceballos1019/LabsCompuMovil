@@ -19,10 +19,10 @@ public class Counter extends CountDownTimer {
     private long minutes,seconds;
     private Intent broadcastIntent;
     private Context context;
+    DBAdapter dbAdapter;
 
     public Counter(long millisInFuture, long countDownInterval){
         super(millisInFuture,countDownInterval);
-
     }
 
     public long getMinutes() {
@@ -47,7 +47,6 @@ public class Counter extends CountDownTimer {
         seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(minutes);
         broadcastIntent = new Intent(MainActivity.COUNTER_TICK_ACTION);
         context.sendBroadcast(broadcastIntent);
-        Log.d("TAG",String.valueOf(seconds));
     }
 
 
@@ -64,8 +63,8 @@ public class Counter extends CountDownTimer {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(android.R.drawable.btn_star_big_on)
-                        .setContentTitle("Alarma")
-                        .setContentText("Se ha completado el tiempo")
+                        .setContentTitle("Time out!")
+                        .setContentText("El tiempo ha finalizado")
                         .setAutoCancel(true)
                         .setOngoing(true)
                         .setContentIntent(contentIntent);
@@ -73,11 +72,13 @@ public class Counter extends CountDownTimer {
         int mNotificationId = 001;
         Notification notification = mBuilder.build();
         notification.defaults |= Notification.DEFAULT_SOUND;
-        int num = Settings.getInstance().getVibration();
-        if(num==1) {
+
+        dbAdapter = new DBAdapter(context);
+        dbAdapter.open();
+        Settings settings = dbAdapter.getSettings();
+        dbAdapter.close();
+        if(settings.getVibration()==1) {
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-        }else{
-            Log.d("TAG", String.valueOf(num));
         }
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);

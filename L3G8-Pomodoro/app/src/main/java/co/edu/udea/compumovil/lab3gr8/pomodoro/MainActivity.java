@@ -21,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
     PomodoroService mService;
     public static final String COUNTER_TICK_ACTION = "COUNTER_TICK";
     public static final String COUNTER_FINISH_ACTION = "COUNTER_FINISH";
+    private static final String FORMAT = "%02d:%02d";
 
     private static final String TITLE_START= "Iniciar";
     private static final String TITLE_STOP= "Parar";
 
     private int currentTime;
     private DBAdapter dbAdapter;
+    private Settings settings;
 
     private boolean mode = true;
 
@@ -43,14 +45,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this,PreferenceActivity.class);
-        startActivity(intent);
-
         dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.open();
-        Settings setup = Settings.getInstance();
-        setup =dbAdapter.getSettings();
-
+        settings =dbAdapter.getSettings();
+        if(settings==null){
+            settings= Settings.getInstance();
+        }
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(COUNTER_TICK_ACTION);
         mIntentFilter.addAction(COUNTER_FINISH_ACTION);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnShortBreak = (Button) findViewById(R.id.btn_short_break);
         btnLongBreak = (Button) findViewById(R.id.btn_long_break);
 
-        currentTime= 10000;
+        currentTime= 1500000;
 
 
     }
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     tvBreak.setText(mService.getRemainingTime());
                     break;
                 case COUNTER_FINISH_ACTION:
+                    currentTime=1500000;
                     mode = !mode;
                     setMode();
                     unbindService(mConnection);
@@ -155,15 +156,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_short_break:
                 intent = new Intent(this, PomodoroService.class);
-                currentTime=360000;
+                settings=dbAdapter.getSettings();
+                currentTime=settings.getShortBreak()*60000;
                 bindService(intent, mConnection, BIND_AUTO_CREATE);
-                tvBreak.setText("3:00");
+                tvBreak.setText(String.format(FORMAT, settings.getShortBreak(), 0));
+                btnShortBreak.setVisibility(Button.INVISIBLE);
+                btnLongBreak.setVisibility(Button.INVISIBLE);
                 break;
             case R.id.btn_long_break:
                 intent = new Intent(this, PomodoroService.class);
-                currentTime=10000;
+                settings=dbAdapter.getSettings();
+                currentTime=settings.getLongBreak()*60000;
                 bindService(intent, mConnection, BIND_AUTO_CREATE);
-                tvBreak.setText("10:00");
+                tvBreak.setText(String.format(FORMAT, settings.getLongBreak(), 0));
+                btnShortBreak.setVisibility(Button.INVISIBLE);
+                btnLongBreak.setVisibility(Button.INVISIBLE);
                 break;
         }
     }
