@@ -73,7 +73,12 @@ public class Counter extends CountDownTimer {
         int mNotificationId = 001;
         Notification notification = mBuilder.build();
         notification.defaults |= Notification.DEFAULT_SOUND;
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        int num = Settings.getInstance().getVibration();
+        if(num==1) {
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+        }else{
+            Log.d("TAG", String.valueOf(num));
+        }
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
 
