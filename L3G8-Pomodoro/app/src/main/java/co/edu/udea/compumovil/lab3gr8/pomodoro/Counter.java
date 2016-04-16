@@ -62,7 +62,7 @@ public class Counter extends CountDownTimer {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(android.R.drawable.btn_star_big_on)
+                        .setSmallIcon(android.R.drawable.ic_notification_overlay)
                         .setContentTitle("Time out!")
                         .setContentText("El tiempo ha finalizado")
                         .setAutoCancel(true)
@@ -71,14 +71,15 @@ public class Counter extends CountDownTimer {
 
         int mNotificationId = 001;
         Notification notification = mBuilder.build();
-        notification.defaults |= Notification.DEFAULT_SOUND;
-
         dbAdapter = new DBAdapter(context);
         dbAdapter.open();
         Settings settings = dbAdapter.getSettings();
         dbAdapter.close();
         if(settings.getVibration()==1) {
             notification.defaults |= Notification.DEFAULT_VIBRATE;
+        }
+        if(settings.getVolume()!=0){
+            notification.defaults |= Notification.DEFAULT_SOUND;
         }
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);

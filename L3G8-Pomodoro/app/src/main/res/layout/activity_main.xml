@@ -12,10 +12,24 @@
     tools:context="co.edu.udea.compumovil.lab3gr8.pomodoro.MainActivity">
 
     <TextView
+        android:id="@+id/tv_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tarea"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
+    <EditText
+        android:id="@+id/et_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task"
+        android:layout_below="@+id/tv_task"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/initial_value"
         android:textSize="@dimen/time_size"
         android:layout_centerInParent="true"/>
 

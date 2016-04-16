@@ -88,11 +88,7 @@ public class PreferenceActivity extends AppCompatActivity {
         });
 
         loadConfiguration();
-        Log.d("TAG", String.valueOf(settings.getVolume()));
-        Log.d("TAG",String.valueOf(settings.getVibration()));
-        Log.d("TAG",String.valueOf(settings.getShortBreak()));
-        Log.d("TAG",String.valueOf(settings.getLongBreak()));
-        Log.d("TAG",String.valueOf(settings.getDebugMode()));
+
 
     }
 

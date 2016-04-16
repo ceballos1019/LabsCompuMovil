@@ -45,8 +45,9 @@ public class PomodoroService extends Service {
 
     public class LocalBinder extends Binder{
         // Return this instance of PomodoroService so clients can call public methods
-        PomodoroService getService(int totalTime){
+        PomodoroService getService(long totalTime){
             mCounter = new Counter(totalTime,1000);
+
             mCounter.setContext(getApplicationContext());
             mCounter.start();
             return PomodoroService.this;

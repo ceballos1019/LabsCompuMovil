@@ -14,7 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.Time;
+import java.util.Currency;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,18 +28,20 @@ public class MainActivity extends AppCompatActivity {
     public static final String COUNTER_TICK_ACTION = "COUNTER_TICK";
     public static final String COUNTER_FINISH_ACTION = "COUNTER_FINISH";
     private static final String FORMAT = "%02d:%02d";
+    private final int TOP_VALUE=25;
 
     private static final String TITLE_START= "Iniciar";
     private static final String TITLE_STOP= "Parar";
 
-    private int currentTime;
+    private long currentTime;
     private DBAdapter dbAdapter;
     private Settings settings;
 
     private boolean mode = true;
 
-    private  IntentFilter mIntentFilter;
-    private TextView tvTime, tvBreak;
+    private IntentFilter mIntentFilter;
+    private TextView tvTime, tvBreak,tvTask;
+    private EditText etTask;
     private Button btnStart, btnShortBreak, btnLongBreak;
 
 
@@ -45,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(this,PreferenceActivity.class);
+        startActivity(intent);
+
         dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.open();
         settings =dbAdapter.getSettings();
@@ -55,14 +66,13 @@ public class MainActivity extends AppCompatActivity {
         mIntentFilter.addAction(COUNTER_TICK_ACTION);
         mIntentFilter.addAction(COUNTER_FINISH_ACTION);
 
+        etTask = (EditText)findViewById(R.id.et_task);
         tvTime = (TextView)findViewById(R.id.tv_time);
         tvBreak = (TextView)findViewById(R.id.tv_break);
+        tvTask = (TextView)findViewById(R.id.tv_task);
         btnStart = (Button) findViewById(R.id.btn_start);
         btnShortBreak = (Button) findViewById(R.id.btn_short_break);
         btnLongBreak = (Button) findViewById(R.id.btn_long_break);
-
-        currentTime= 1500000;
-
 
     }
 
@@ -89,17 +99,28 @@ public class MainActivity extends AppCompatActivity {
             btnStart.setVisibility(Button.VISIBLE);
             btnStart.setText(TITLE_START);
             tvTime.setVisibility(TextView.VISIBLE);
-            tvTime.setText("25:00");
+            settings=dbAdapter.getSettings();
+            if(settings.getDebugMode()==1){
+                tvTime.setText("00:25");
+            }else{
+                tvTime.setText("25:00");
+            }
+            etTask.setText("");
+            etTask.setVisibility(EditText.VISIBLE);
             btnShortBreak.setVisibility(Button.INVISIBLE);
             btnLongBreak.setVisibility(Button.INVISIBLE);
             tvBreak.setVisibility(TextView.INVISIBLE);
+            tvTask.setVisibility(TextView.VISIBLE);
         }else{
+            Toast.makeText(MainActivity.this,"Recuerde tomar una descanso largo cada cuatro pomodoros",Toast.LENGTH_LONG).show();
             btnStart.setVisibility(Button.INVISIBLE);
             tvTime.setVisibility(TextView.INVISIBLE);
             btnShortBreak.setVisibility(Button.VISIBLE);
             btnLongBreak.setVisibility(Button.VISIBLE);
             tvBreak.setVisibility(TextView.VISIBLE);
             tvBreak.setText("");
+            tvTask.setVisibility(TextView.INVISIBLE);
+            etTask.setVisibility(EditText.INVISIBLE);
         }
     }
 
@@ -119,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     tvBreak.setText(mService.getRemainingTime());
                     break;
                 case COUNTER_FINISH_ACTION:
-                    currentTime=1500000;
                     mode = !mode;
                     setMode();
                     unbindService(mConnection);
@@ -138,10 +158,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v){
         int id = v.getId();
+        settings=dbAdapter.getSettings();
         Intent intent;
         switch(id){
             case R.id.btn_start:
                 if(option) {
+                    if(settings.getDebugMode()==1){
+                        currentTime= TimeUnit.SECONDS.toMillis(TOP_VALUE);
+                    }else{
+                        currentTime = TimeUnit.MINUTES.toMillis(TOP_VALUE);
+                    }
                     intent = new Intent(this, PomodoroService.class);
                     bindService(intent, mConnection, BIND_AUTO_CREATE);
                     btnStart.setText(TITLE_STOP);
@@ -150,14 +176,21 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     unbindService(mConnection);
                     btnStart.setText(TITLE_START);
-                    tvTime.setText("25:00");
+                    if(settings.getDebugMode()==1){
+                        tvTime.setText("00:25");
+                    }else {
+                        tvTime.setText("25:00");
+                    }
                     option=true;
                 }
                 break;
             case R.id.btn_short_break:
                 intent = new Intent(this, PomodoroService.class);
-                settings=dbAdapter.getSettings();
-                currentTime=settings.getShortBreak()*60000;
+                if(settings.getDebugMode()==1){
+                    currentTime= TimeUnit.SECONDS.toMillis(settings.getShortBreak());
+                }else{
+                    currentTime = TimeUnit.MINUTES.toMillis(settings.getShortBreak());
+                }
                 bindService(intent, mConnection, BIND_AUTO_CREATE);
                 tvBreak.setText(String.format(FORMAT, settings.getShortBreak(), 0));
                 btnShortBreak.setVisibility(Button.INVISIBLE);
@@ -165,8 +198,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_long_break:
                 intent = new Intent(this, PomodoroService.class);
-                settings=dbAdapter.getSettings();
-                currentTime=settings.getLongBreak()*60000;
+                if(settings.getDebugMode()==1){
+                    currentTime= TimeUnit.SECONDS.toMillis(settings.getLongBreak());
+                }else{
+                    currentTime = TimeUnit.MINUTES.toMillis(settings.getShortBreak());
+                }
                 bindService(intent, mConnection, BIND_AUTO_CREATE);
                 tvBreak.setText(String.format(FORMAT, settings.getLongBreak(), 0));
                 btnShortBreak.setVisibility(Button.INVISIBLE);
