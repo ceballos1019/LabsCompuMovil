@@ -9,8 +9,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="co.edu.udea.compumovil.lab4gr8.weather.MainActivity">
 
-    <TextView
+    <ImageButton
+        android:id="@+id/ib_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@android:drawable/ic_menu_search"
+        android:background="?android:selectableItemBackground"
+        android:onClick="onClick"
+        android:contentDescription="search icon"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/tv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/ib_search"
+        android:layout_toStartOf="@+id/ib_search"
+        android:inputType="textAutoComplete"
+        android:layout_centerHorizontal="true"
+        android:hint="Ciudad capital"
+        android:maxLines="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_search"/>
+
+
 </RelativeLayout>
