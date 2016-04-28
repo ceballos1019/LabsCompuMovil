@@ -26,27 +26,23 @@ public class HttpClient {
 
     public String getJSONData(String city,String language) {
 
-        String data = "";
+        String data = null;
         String URL = getDataURL(city,language);
         HttpURLConnection httpUrlConnection = null;
 
         try {
             httpUrlConnection = (HttpURLConnection) new URL(URL).openConnection();
-
-            InputStream in = new BufferedInputStream(
-                    httpUrlConnection.getInputStream());
-
+            InputStream in = new BufferedInputStream(httpUrlConnection.getInputStream());
             data = readStream(in);
-
         } catch (MalformedURLException exception) {
             Log.e(TAG, "MalformedURLException");
         } catch (IOException exception) {
             Log.e(TAG, "IOException");
         } finally {
-            if (null != httpUrlConnection)
+            if (null != httpUrlConnection) {
                 httpUrlConnection.disconnect();
+            }
         }
-        Log.d(TAG,data);
         return data;
 
     }

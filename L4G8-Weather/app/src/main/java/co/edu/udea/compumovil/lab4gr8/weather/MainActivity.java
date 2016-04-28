@@ -3,6 +3,8 @@ package co.edu.udea.compumovil.lab4gr8.weather;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,cities);
         tvSearch.setAdapter(adapter);
         tvSearch.setThreshold(2);
-        //tvSearch.setOnItemClickListener(myClickListener);
-
     }
 
     public void onClick(View v){
         String city = tvSearch.getText().toString();
-        new HttpGetTask().execute(city);
+        if(checkConnection()) {
+            new HttpGetTask().execute(city);
+        }else{
+            Toast.makeText(this,"Verifique su conexión a internet",Toast.LENGTH_LONG).show();
+        }
     }
 
     private class HttpGetTask extends AsyncTask<String, Void, City> {
@@ -62,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //super.onPreExecute();
-
             //Start Progress Dialog (Message)
             Dialog.setMessage("Cargando información del clima");
             Dialog.show();
@@ -75,12 +77,16 @@ public class MainActivity extends AppCompatActivity {
             String cityName = params[0];
             String language = getResources().getString(R.string.idioma);
             data = client.getJSONData(cityName,language);
-
+            Log.d(TAG,"Data:"+data);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Weather.class,new WeatherDeserializer());
             Gson gson = gsonBuilder.create();
-
-            Weather currentWeather = gson.fromJson(data,Weather.class);
+            Weather currentWeather=null;
+            try {
+                currentWeather = gson.fromJson(data, Weather.class);
+            }catch(com.google.gson.JsonSyntaxException ex){
+                Log.d(TAG,"Hay un error");
+            }
             byte [] b = client.downloadImage(currentWeather.getIconCode());
             currentWeather.setImageWeather(b);
 
@@ -109,6 +115,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private boolean checkConnection() {
+        // get Connectivity Manager object to check connection
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isAvailable()) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -11,8 +11,11 @@ public class Weather {
     private String iconCode;
     private byte [] imageWeather;
 
+    //Constructors
     public Weather(){}
 
+
+    //Getters and setters
     public double getTemperature() {
         return temperature;
     }
