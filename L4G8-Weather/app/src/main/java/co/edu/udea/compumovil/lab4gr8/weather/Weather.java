@@ -8,12 +8,10 @@ public class Weather {
     private double temperature;
     private int humidity;
     private String description;
+    private String iconCode;
+    private byte [] imageWeather;
 
-    public Weather(double temperature, int humidity, String description) {
-        this.temperature = temperature;
-        this.humidity = humidity;
-        this.description = description;
-    }
+    public Weather(){}
 
     public double getTemperature() {
         return temperature;
@@ -37,5 +35,21 @@ public class Weather {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIconCode() {
+        return iconCode;
+    }
+
+    public void setIconCode(String iconCode) {
+        this.iconCode = iconCode;
+    }
+
+    public byte[] getImageWeather() {
+        return imageWeather;
+    }
+
+    public void setImageWeather(byte[] imageWeather) {
+        this.imageWeather = imageWeather;
     }
 }

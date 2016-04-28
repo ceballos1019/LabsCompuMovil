@@ -35,10 +35,33 @@
         android:gravity="center"/>
 
     <TextView
-        android:id="@+id/tv_test"
+        android:id="@+id/tv_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_search"/>
 
+    <TextView
+        android:id="@+id/tv_temperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_city"/>
+
+    <TextView
+        android:id="@+id/tv_humidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_temperature"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_humidity"/>
+    
+    <ImageView
+        android:id="@+id/iv_weather_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_description"/>
 
 </RelativeLayout>

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">L4G8-Weather</string>
     <string name="country">Pais</string>
-    
+    <string name="idioma">es</string>
+
     <string-array name="capital_cities">
         <item>Kabul</item>
         <item>Tirana</item>
