@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.lab4gr8.weather;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -21,9 +23,11 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String message;
     private AutoCompleteTextView tvSearch;
     private TextView tvCity, tvTemperature, tvHumidity, tvDescription;
     private ImageView ivWeather;
@@ -51,11 +55,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v){
         String city = tvSearch.getText().toString();
-        if(checkConnection()) {
-            new HttpGetTask().execute(city);
-        }else{
-            Toast.makeText(this,"Verifique su conexión a internet",Toast.LENGTH_LONG).show();
+        if(city.equals("")){
+            Toast.makeText(MainActivity.this,"Por favor ingrese una ciudad",Toast.LENGTH_LONG).show();
+        }else {
+            String cityFormated = formatCity(city);
+            if (checkConnection()) {
+                new HttpGetTask().execute(city, cityFormated);
+            } else {
+                Toast.makeText(this, "Verifique su conexión a internet", Toast.LENGTH_LONG).show();
+            }
+            tvSearch.setText("");
         }
+
+        //Hide the soft keyboard
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    private String formatCity(String city) {
+        //Formatear el string de la ciudad para cuando contenga mas de una palabra
+        StringTokenizer tokenizer = new StringTokenizer(city);
+        String responseCity=tokenizer.nextToken();
+        while(tokenizer.hasMoreTokens()){
+            responseCity+="%20"+tokenizer.nextToken();
+        }
+        return responseCity;
     }
 
     private class HttpGetTask extends AsyncTask<String, Void, City> {
@@ -74,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected City doInBackground(String... params) {
             HttpClient client = new HttpClient();
-            String cityName = params[0];
+            String cityName=params[0];
+            String cityURL = params[1];
             String language = getResources().getString(R.string.idioma);
-            data = client.getJSONData(cityName,language);
+            data = client.getJSONData(cityURL,language);
             Log.d(TAG,"Data:"+data);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Weather.class,new WeatherDeserializer());
@@ -85,12 +110,14 @@ public class MainActivity extends AppCompatActivity {
             try {
                 currentWeather = gson.fromJson(data, Weather.class);
             }catch(com.google.gson.JsonSyntaxException ex){
-                return null;
+                message = "Verifique su conexión a Internet";
             }
             if(currentWeather==null){
-                //FALTA MANEJAR ESTE CASO
-                Log.d(TAG,"ES NULOO");
+                message = "Ciudad invalida";
+                return null;
+
             }else {
+                publishProgress();
                 byte[] b = client.downloadImage(currentWeather.getIconCode());
                 currentWeather.setImageWeather(b);
                 City city = new City();
@@ -98,8 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 city.setWeather(currentWeather);
                 return city;
             }
+        }
 
-            return null;
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.setMessage("Descargando Imagen");
         }
 
         @Override
@@ -110,16 +140,15 @@ public class MainActivity extends AppCompatActivity {
             if(city!=null) {
                 Weather weather = city.getWeather();
                 tvCity.setText(city.getName());
-                tvTemperature.setText(String.valueOf(weather.getTemperature()));
-                tvHumidity.setText(String.valueOf(weather.getHumidity()));
-                tvDescription.setText(weather.getDescription());
+                tvTemperature.setText(getResources().getString(R.string.temperature)+""+String.valueOf(weather.getTemperature())+"°");
+                tvHumidity.setText(getResources().getString(R.string.humidity)+""+String.valueOf(weather.getHumidity()));
+                tvDescription.setText(getResources().getString(R.string.description)+""+weather.getDescription());
 
                 byte[] imgWeather = weather.getImageWeather();
                 Bitmap bitmapWeather = BitmapFactory.decodeByteArray(imgWeather, 0, imgWeather.length);
                 ivWeather.setImageBitmap(bitmapWeather);
             }else{
-
-                //FALTA MANEJAR ESTE CASO
+                Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG).show();
             }
 
         }

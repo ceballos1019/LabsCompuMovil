@@ -30,8 +30,8 @@
         android:layout_toStartOf="@+id/ib_search"
         android:inputType="textAutoComplete"
         android:layout_centerHorizontal="true"
-        android:imeOptions="actionDone"
         android:hint="Ciudad capital"
+        android:imeOptions="actionDone"
         android:maxLines="1"
         android:gravity="center"/>
 
@@ -39,18 +39,18 @@
         android:id="@+id/tv_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textSize="32sp"
+        android:textSize="25sp"
         android:layout_below="@+id/tv_search"/>
 
     <TextView
         android:id="@+id/tv_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@+id/iv_weather_image"
         android:layout_toEndOf="@+id/iv_weather_image"
         android:layout_below="@+id/tv_city"/>
@@ -59,8 +59,8 @@
         android:id="@+id/tv_humidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@+id/iv_weather_image"
         android:layout_toEndOf="@+id/iv_weather_image"
         android:layout_below="@+id/tv_temperature"/>
@@ -69,8 +69,8 @@
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@+id/iv_weather_image"
         android:layout_toEndOf="@+id/iv_weather_image"
         android:layout_below="@+id/tv_humidity"/>
@@ -79,8 +79,9 @@
         android:id="@+id/iv_weather_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="60dp"
-        android:layout_marginRight="15dp"
+        android:paddingTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_below="@+id/tv_city"/>
 
 </RelativeLayout>

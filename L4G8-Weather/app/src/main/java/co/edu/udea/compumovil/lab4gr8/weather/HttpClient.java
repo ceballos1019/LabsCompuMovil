@@ -28,6 +28,7 @@ public class HttpClient {
 
         String data = null;
         String URL = getDataURL(city,language);
+        Log.d(TAG,URL);
         HttpURLConnection httpUrlConnection = null;
 
         try {

@@ -2,6 +2,9 @@
     <string name="app_name">L4G8-Weather</string>
     <string name="country">Pais</string>
     <string name="idioma">es</string>
+    <string name="temperature">Temperatura:</string>
+    <string name="humidity">Humedad:</string>
+    <string name="description">Descripción:</string>
 
     <string-array name="capital_cities">
         <item>Kabul</item>
@@ -118,7 +121,6 @@
         <item>Niamey</item>
         <item>Abuya</item>
         <item>Oslo</item>
-
         <item>Wellington</item>
         <item>Mascate</item>
         <item>Amsterdam</item>
