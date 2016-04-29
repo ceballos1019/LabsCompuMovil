@@ -85,16 +85,21 @@ public class MainActivity extends AppCompatActivity {
             try {
                 currentWeather = gson.fromJson(data, Weather.class);
             }catch(com.google.gson.JsonSyntaxException ex){
-                Log.d(TAG,"Hay un error");
+                return null;
             }
-            byte [] b = client.downloadImage(currentWeather.getIconCode());
-            currentWeather.setImageWeather(b);
+            if(currentWeather==null){
+                //FALTA MANEJAR ESTE CASO
+                Log.d(TAG,"ES NULOO");
+            }else {
+                byte[] b = client.downloadImage(currentWeather.getIconCode());
+                currentWeather.setImageWeather(b);
+                City city = new City();
+                city.setName(cityName);
+                city.setWeather(currentWeather);
+                return city;
+            }
 
-            City city = new City();
-            city.setName(cityName);
-            city.setWeather(currentWeather);
-
-            return city;
+            return null;
         }
 
         @Override
@@ -112,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 byte[] imgWeather = weather.getImageWeather();
                 Bitmap bitmapWeather = BitmapFactory.decodeByteArray(imgWeather, 0, imgWeather.length);
                 ivWeather.setImageBitmap(bitmapWeather);
+            }else{
+
+                //FALTA MANEJAR ESTE CASO
             }
 
         }
