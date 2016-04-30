@@ -28,15 +28,20 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity {
 
     private String message;
+    private City currentCity;
     private AutoCompleteTextView tvSearch;
     private TextView tvCity, tvTemperature, tvHumidity, tvDescription;
     private ImageView ivWeather;
+    private boolean cityAvailable;
     private List<String> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(savedInstanceState!=null){
+            cityAvailable = savedInstanceState.getBoolean("State");
+        }
 
         //Capturar las vistas
         tvSearch = (AutoCompleteTextView) findViewById(R.id.tv_search);
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,cities);
         tvSearch.setAdapter(adapter);
         tvSearch.setThreshold(2);
+
     }
 
     public void onClick(View v){
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             // Close progress dialog
             Dialog.dismiss();
             if(city!=null) {
+                currentCity = city;
                 Weather weather = city.getWeather();
                 tvCity.setText(city.getName());
                 tvTemperature.setText(getResources().getString(R.string.temperature)+""+String.valueOf(weather.getTemperature())+"°");
@@ -147,8 +154,11 @@ public class MainActivity extends AppCompatActivity {
                 byte[] imgWeather = weather.getImageWeather();
                 Bitmap bitmapWeather = BitmapFactory.decodeByteArray(imgWeather, 0, imgWeather.length);
                 ivWeather.setImageBitmap(bitmapWeather);
+                cityAvailable=true;
             }else{
                 Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG).show();
+                cityAvailable = false;
+                clearScreen();
             }
 
         }
@@ -166,4 +176,43 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(currentCity!=null) {
+            outState.putString("City", new Gson().toJson(currentCity));
+            outState.putBoolean("State",cityAvailable);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String jsonMyObject;
+        Log.d("ONON","RESTORE");
+        if (savedInstanceState != null) {
+            boolean isAvailable = savedInstanceState.getBoolean("State");
+            if(isAvailable) {
+                jsonMyObject = savedInstanceState.getString("City");
+                Log.d("ONON", jsonMyObject);
+                currentCity = new Gson().fromJson(jsonMyObject, City.class);
+                Weather weather = currentCity.getWeather();
+                tvCity.setText(currentCity.getName());
+                tvTemperature.setText(getResources().getString(R.string.temperature) + "" + String.valueOf(weather.getTemperature()) + "°");
+                tvHumidity.setText(getResources().getString(R.string.humidity) + "" + String.valueOf(weather.getHumidity()));
+                tvDescription.setText(getResources().getString(R.string.description) + "" + weather.getDescription());
+                byte[] imgWeather = weather.getImageWeather();
+                Bitmap bitmapWeather = BitmapFactory.decodeByteArray(imgWeather, 0, imgWeather.length);
+                ivWeather.setImageBitmap(bitmapWeather);
+            }
+        }
+    }
+
+    private void clearScreen(){
+        tvCity.setText("");
+        tvTemperature.setText("");
+        tvHumidity.setText("");
+        tvDescription.setText("");
+        ivWeather.setImageBitmap(null);
+    }
 }
