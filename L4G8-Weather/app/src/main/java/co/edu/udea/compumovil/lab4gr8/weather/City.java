@@ -7,6 +7,7 @@ public class City {
     private Weather weather;
     private String name;
 
+    //Getters and setters
     public Weather getWeather() {
         return weather;
     }

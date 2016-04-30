@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Obtener el estado de la variable guardada
         if(savedInstanceState!=null){
             cityAvailable = savedInstanceState.getBoolean("State");
         }
@@ -62,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v){
         String city = tvSearch.getText().toString();
         if(city.equals("")){
+            //Validar si el texto entrado es vacio
             Toast.makeText(MainActivity.this,"Por favor ingrese una ciudad",Toast.LENGTH_LONG).show();
         }else {
+            //Formatear el string de la ciudad en caso de que tenga espacios
             String cityFormated = formatCity(city);
             if (checkConnection()) {
                 new HttpGetTask().execute(city, cityFormated);
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             tvSearch.setText("");
         }
 
-        //Hide the soft keyboard
+        //Esconder el teclado virtual cuando se de click en el icono para buscar
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
@@ -104,11 +108,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected City doInBackground(String... params) {
             HttpClient client = new HttpClient();
+
+            //Obtener los parametros
             String cityName=params[0];
             String cityURL = params[1];
+
+            //Obtener el lenguaje para la consulta
             String language = getResources().getString(R.string.idioma);
+
+            //Traer los datos del clima
             data = client.getJSONData(cityURL,language);
-            Log.d(TAG,"Data:"+data);
+
+            //Convertir JSON a modelo de objetos Java
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Weather.class,new WeatherDeserializer());
             Gson gson = gsonBuilder.create();
@@ -124,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
             }else {
                 publishProgress();
+
+                //Descargar la imagen
                 byte[] b = client.downloadImage(currentWeather.getIconCode());
                 currentWeather.setImageWeather(b);
                 City city = new City();
@@ -143,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Close progress dialog
             Dialog.dismiss();
+            //Búsqueda exitosa: mostrar en pantalla el resultado
             if(city!=null) {
                 currentCity = city;
                 Weather weather = city.getWeather();
@@ -156,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 ivWeather.setImageBitmap(bitmapWeather);
                 cityAvailable=true;
             }else{
+                //Busqueda no exitosa: Mostrar una notificacion toast con el mensaje respectivo
                 Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG).show();
                 cityAvailable = false;
                 clearScreen();
@@ -164,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*Chequear la conexión a Internet*/
     private boolean checkConnection() {
         // get Connectivity Manager object to check connection
         ConnectivityManager cm = (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
@@ -176,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /*Guardar el estado del clima para cuando se gire la pantalla*/
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -185,16 +202,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*Restaurar el estado del clima*/
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String jsonMyObject;
-        Log.d("ONON","RESTORE");
         if (savedInstanceState != null) {
             boolean isAvailable = savedInstanceState.getBoolean("State");
             if(isAvailable) {
                 jsonMyObject = savedInstanceState.getString("City");
-                Log.d("ONON", jsonMyObject);
                 currentCity = new Gson().fromJson(jsonMyObject, City.class);
                 Weather weather = currentCity.getWeather();
                 tvCity.setText(currentCity.getName());
@@ -208,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*Limpiar la pantalla*/
     private void clearScreen(){
         tvCity.setText("");
         tvTemperature.setText("");

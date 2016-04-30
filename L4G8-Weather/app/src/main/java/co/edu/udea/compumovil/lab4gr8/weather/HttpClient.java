@@ -48,14 +48,17 @@ public class HttpClient {
 
     }
 
+    /*Obtener la URL para la consulta de los datos del clima*/
     private String getDataURL(String city,String language) {
         return URL_BASE+REQUESTS[0]+"?q="+city+"&units=metric&lang="+language+"&APPID=" + API_KEY;
     }
 
+    /*Obtener la URL para la decarga de la imagen*/
     private String getImageURL(String iconCode){
         return URL_BASE + REQUESTS[1]+iconCode;
     }
 
+    /*Leer los datos obtenidos del clima*/
     @NonNull
     private String readStream(InputStream in) {
         BufferedReader reader = null;
